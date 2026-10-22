@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal de información mercantil, contratos y recursos de consulta de la firma.">
+  <title>Firma Mercantil | Información y conocimiento jurídico</title>
+  <style>
+    :root {
+      --coffee-950: #2b1d17;
+      --coffee-900: #38251c;
+      --coffee-800: #4b3024;
+      --coffee-700: #674532;
+      --coffee-600: #835b42;
+      --copper: #b47a4d;
+      --sand: #d9bd9a;
+      --cream: #f7f2eb;
+      --paper: #fffdf9;
+      --ink: #2e2824;
+      --muted: #74685f;
+      --line: #e7ddd2;
+      --white: #ffffff;
+      --shadow: 0 22px 55px rgba(43, 29, 23, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1160px, calc(100% - 44px)); margin: 0 auto; }
+
+    /* Navegación */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 253, 249, .94);
+      border-bottom: 1px solid rgba(103, 69, 50, .13);
+      backdrop-filter: blur(14px);
+    }
+    .nav-wrap {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 220px; }
+    .brand-mark {
+      width: 44px; height: 44px; border-radius: 13px;
+      display: grid; place-items: center;
+      color: var(--cream); background: var(--coffee-900);
+      font-family: Georgia, serif; font-size: 23px; font-weight: 700;
+      box-shadow: 0 8px 18px rgba(43, 29, 23, .16);
+    }
+    .brand-name { font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 700; line-height: 1.15; color: var(--coffee-950); }
+    .brand-sub { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { font-size: 12px; font-weight: 700; color: #514239; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--copper); }
+    .nav-links .nav-cta {
+      padding: 11px 16px; color: var(--white); background: var(--coffee-800);
+      border-radius: 999px;
+    }
+    .nav-links .nav-cta:hover { background: var(--coffee-600); color: var(--white); }
+    .menu-toggle {
+      display: none; border: 1px solid var(--line); background: var(--paper);
+      color: var(--coffee-900); border-radius: 10px; width: 44px; height: 42px;
+      font-size: 22px; cursor: pointer;
+    }
+
+    /* Portada */
+    .hero {
+      position: relative; overflow: hidden; color: var(--cream);
+      background:
+        radial-gradient(circle at 78% 20%, rgba(180, 122, 77, .25), transparent 29%),
+        linear-gradient(115deg, #2b1d17 0%, #4b3024 58%, #674532 100%);
+      min-height: 610px;
+      display: flex; align-items: center;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; opacity: .12; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to right, transparent, black);
+    }
+    .hero-grid {
+      position: relative; z-index: 1; display: grid;
+      grid-template-columns: 1.12fr .88fr; gap: 58px; align-items: center;
+      padding-top: 76px; padding-bottom: 82px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+      color: #e3c6a7; font-size: 11px; letter-spacing: 2.5px; font-weight: 800; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--copper); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 690px; margin-bottom: 23px;
+      font: 500 clamp(42px, 5.2vw, 68px)/1.08 Georgia, "Times New Roman", serif;
+      letter-spacing: -1.5px;
+    }
+    h1 em { color: #d8b38d; font-weight: 400; }
+    .hero-copy { max-width: 570px; color: #e4d8cd; font-size: 16px; line-height: 1.85; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+      min-height: 48px; padding: 0 20px; border-radius: 999px;
+      font-size: 12px; font-weight: 800; transition: transform .2s, background .2s, border-color .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-light { color: var(--coffee-950); background: #ead6c0; border: 1px solid #ead6c0; }
+    .btn-light:hover { background: #f4e6d7; }
+    .btn-outline { color: var(--cream); border: 1px solid rgba(255,255,255,.35); background: transparent; }
+    .btn-outline:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.7); }
+    .hero-visual { position: relative; min-height: 390px; }
+    .hero-photo {
+      position: absolute; top: 0; right: 0; width: 83%; height: 355px; object-fit: cover;
+      border-radius: 170px 170px 18px 18px; border: 7px solid rgba(255,255,255,.1);
+      filter: sepia(13%) saturate(.8); box-shadow: 0 30px 65px rgba(0,0,0,.28);
+    }
+    .hero-stamp {
+      position: absolute; right: 0; bottom: 0; width: 190px; padding: 23px 22px;
+      color: var(--coffee-950); background: #ead6c0; border-radius: 15px;
+      box-shadow: 0 20px 45px rgba(0,0,0,.2);
+    }
+    .hero-stamp strong { display: block; font: 700 28px/1.15 Georgia, serif; }
+    .hero-stamp span { display: block; margin-top: 8px; font-size: 11px; line-height: 1.5; color: #665043; }
+    .hero-caption {
+      position: absolute; left: 0; bottom: 30px; max-width: 205px; padding-left: 15px;
+      border-left: 2px solid var(--copper); color: #dfcfc0; font: italic 14px/1.6 Georgia, serif;
+    }
+
+    /* Banda de acceso */
+    .quick-strip { background: var(--cream); border-bottom: 1px solid var(--line); }
+    .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .quick-item {
+      display: flex; gap: 15px; align-items: center; padding: 26px 25px;
+      border-right: 1px solid var(--line);
+    }
+    .quick-item:first-child { padding-left: 0; }
+    .quick-item:last-child { border-right: 0; }
+    .quick-icon {
+      flex: 0 0 44px; width: 44px; height: 44px; display: grid; place-items: center;
+      color: var(--coffee-700); background: #eadbca; border-radius: 14px; font-size: 20px;
+    }
+    .quick-item strong { display: block; font: 700 16px Georgia, serif; color: var(--coffee-900); }
+    .quick-item span { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); }
+
+    /* Secciones generales */
+    section { padding: 100px 0; }
+    .section-heading { max-width: 690px; margin: 0 auto 48px; text-align: center; }
+    .section-kicker {
+      color: var(--copper); font-size: 10px; font-weight: 900; letter-spacing: 2.5px;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    h2 { margin-bottom: 17px; color: var(--coffee-950); font: 500 clamp(32px, 4vw, 46px)/1.16 Georgia, "Times New Roman", serif; letter-spacing: -.7px; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .section-heading h2 span { color: var(--coffee-600); font-style: italic; }
+
+    /* Roles */
+    .roles-section { background: var(--paper); }
+    .roles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .role-card {
+      overflow: hidden; background: var(--white); border: 1px solid var(--line); border-radius: 17px;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .role-card:hover { transform: translateY(-7px); box-shadow: var(--shadow); border-color: #d4b99f; }
+    .role-photo-wrap { position: relative; height: 215px; overflow: hidden; background: #e9ded2; }
+    .role-photo { width: 100%; height: 100%; object-fit: cover; filter: sepia(15%) saturate(.75); transition: transform .5s ease; }
+    .role-card:hover .role-photo { transform: scale(1.05); }
+    .role-number {
+      position: absolute; top: 13px; left: 13px; display: grid; place-items: center;
+      width: 34px; height: 34px; border-radius: 50%; color: var(--cream);
+      background: rgba(43,29,23,.86); font: 14px Georgia, serif;
+    }
+    .role-info { padding: 20px 18px 22px; }
+    .role-info h3 { margin-bottom: 7px; color: var(--coffee-950); font: 700 18px/1.3 Georgia, serif; }
+    .role-title {
+      display: inline-block; padding: 6px 9px; border-radius: 5px; background: #f4ece3;
+      color: var(--coffee-700); font-size: 9px; letter-spacing: 1px; font-weight: 900; text-transform: uppercase;
+    }
+    .roles-note {
+      display: flex; align-items: flex-start; gap: 13px; margin-top: 28px; padding: 18px 20px;
+      background: var(--cream); border-left: 3px solid var(--copper); color: var(--muted); font-size: 12px;
+    }
+    .roles-note strong { color: var(--coffee-900); }
+
+    /* Contenido destacado */
+    .content-section { background: var(--cream); }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+    .feature-card {
+      position: relative; min-height: 330px; overflow: hidden; padding: 35px;
+      display: flex; flex-direction: column; justify-content: flex-end; color: var(--cream);
+      border-radius: var(--radius); isolation: isolate; background: var(--coffee-900);
+    }
+    .feature-card::before {
+      content: ""; position: absolute; inset: 0; z-index: -2;
+      background-size: cover; background-position: center; transition: transform .6s ease;
+      filter: sepia(22%) saturate(.7);
+    }
+    .feature-card:hover::before { transform: scale(1.05); }
+    .feature-card::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(0deg, rgba(35,23,17,.94), rgba(35,23,17,.12) 90%);
+    }
+    .feature-card.typical::before { background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=85'); }
+    .feature-card.atypical::before { background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85'); }
+    .feature-tag { align-self: flex-start; margin-bottom: auto; padding: 7px 11px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; font-size: 10px; letter-spacing: 1.3px; text-transform: uppercase; }
+    .feature-card h3 { max-width: 390px; margin: 32px 0 12px; font: 500 31px/1.2 Georgia, serif; }
+    .feature-card p { max-width: 440px; margin-bottom: 20px; color: #e4d8cd; font-size: 13px; line-height: 1.75; }
+    .text-link { display: inline-flex; align-items: center; gap: 10px; width: fit-content; color: #e7c7a6; font-size: 12px; font-weight: 800; }
+    .text-link span { transition: transform .2s; }
+    .text-link:hover span { transform: translateX(5px); }
+
+    /* Métodos y fichas */
+    .resources-section { background: var(--paper); }
+    .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .resource-card {
+      padding: 28px; background: var(--white); border: 1px solid var(--line); border-radius: 16px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .resource-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .resource-icon {
+      width: 48px; height: 48px; display: grid; place-items: center; margin-bottom: 23px;
+      border-radius: 14px; background: #f0e3d5; color: var(--coffee-700); font-size: 22px;
+    }
+    .resource-card h3 { margin-bottom: 10px; color: var(--coffee-950); font: 700 20px Georgia, serif; }
+    .resource-card p { min-height: 68px; margin-bottom: 18px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .resource-card a { color: var(--coffee-700); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+    .resource-card a:hover { color: var(--copper); }
+
+    /* Cierre */
+    .cta-section { padding: 0 0 95px; background: var(--paper); }
+    .cta-panel {
+      position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; gap: 35px;
+      padding: 48px 55px; color: var(--cream); background: var(--coffee-900); border-radius: var(--radius);
+    }
+    .cta-panel::after {
+      content: "§"; position: absolute; right: 32%; top: -70px; color: rgba(255,255,255,.045);
+      font: 300 250px Georgia, serif; pointer-events: none;
+    }
+    .cta-panel h2 { max-width: 580px; margin-bottom: 12px; color: var(--cream); font-size: clamp(29px, 3.4vw, 40px); }
+    .cta-panel p { max-width: 590px; margin-bottom: 0; color: #d8c9bc; font-size: 13px; }
+    .cta-panel .btn { position: relative; z-index: 1; flex-shrink: 0; }
+
+    footer { padding: 27px 0; background: #241812; color: #c9b9ab; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-brand { color: var(--cream); font: 700 15px Georgia, serif; }
+    footer p { margin: 5px 0 0; font-size: 10px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .footer-links a { font-size: 10px; }
+    .footer-links a:hover { color: #e7c7a6; }
+
+    /* Efecto de aparición al desplazarse */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* Adaptación a tabletas y móviles */
+    @media (max-width: 1000px) {
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 11px; }
+      .hero-grid { gap: 30px; }
+      .roles-grid { grid-template-columns: repeat(2, 1fr); }
+      .role-photo-wrap { height: 250px; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 32px, 560px); }
+      .nav-wrap { min-height: 70px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 18px 22px 22px;
+        background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: 0 18px 24px rgba(43,29,23,.08);
+        align-items: stretch; flex-direction: column; gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 4px; font-size: 13px; }
+      .nav-links .nav-cta { text-align: center; margin-top: 8px; }
+      .hero { min-height: 0; }
+      .hero-grid { grid-template-columns: 1fr; gap: 28px; padding-top: 65px; padding-bottom: 55px; }
+      h1 { font-size: clamp(40px, 12vw, 58px); }
+      .hero-copy { font-size: 14px; }
+      .hero-visual { min-height: 335px; max-width: 500px; width: 100%; margin: 0 auto; }
+      .hero-photo { height: 300px; width: 80%; }
+      .hero-caption { bottom: 14px; }
+      .hero-stamp { width: 160px; padding: 17px; }
+      .hero-stamp strong { font-size: 24px; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .quick-item, .quick-item:first-child { padding: 17px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .quick-item:last-child { border-bottom: 0; }
+      section { padding: 72px 0; }
+      .section-heading { margin-bottom: 34px; }
+      .roles-grid { gap: 13px; }
+      .role-photo-wrap { height: 190px; }
+      .role-info { padding: 16px 13px 18px; }
+      .role-info h3 { font-size: 16px; }
+      .role-title { font-size: 8px; letter-spacing: .6px; }
+      .feature-grid, .resources-grid { grid-template-columns: 1fr; }
+      .feature-card { min-height: 310px; padding: 27px; }
+      .resource-card p { min-height: 0; }
+      .cta-panel { padding: 34px 25px; align-items: flex-start; flex-direction: column; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 400px) {
+      .brand { min-width: 0; }
+      .brand-name { font-size: 15px; }
+      .brand-sub { font-size: 8px; letter-spacing: 1.3px; }
+      .roles-grid { grid-template-columns: 1fr; }
+      .role-photo-wrap { height: 250px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+    }
+  
+    .brand-logo { width: 48px; height: 48px; object-fit: cover; border-radius: 50%; border: 2px solid #c79a4b; box-shadow: 0 4px 14px #0002; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .hero-banner-wrap { position:relative; width:100%; margin: 0 auto; padding: 0; background:#08182a; overflow:hidden; }
+    .hero-banner { display:block; width:100%; height:auto; max-height:560px; object-fit:cover; }
+    .hero-banner-link { display:block; line-height:0; }
+    .theory-section { padding: 100px 0; background: linear-gradient(180deg,#fffdf9,#f7f1e8); }
+    .theory-intro-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin: 38px 0 58px; }
+    .theory-intro { padding:28px; border:1px solid #e5d5bf; border-radius:18px; background:#fff; box-shadow:0 12px 35px #38251c0c; }
+    .theory-intro > span,.theory-subheading > span { color:#b47a4d; font-size:.78rem; letter-spacing:.14em; font-weight:800; }
+    .theory-intro h3 { margin:12px 0; font-family:Georgia,serif; font-size:1.45rem; color:#38251c; }
+    .theory-intro p { color:#74685f; line-height:1.7; }
+    .theory-intro a { color:#835b42; font-weight:700; text-decoration:none; }
+    .theory-subheading { display:flex; align-items:center; gap:18px; margin:54px 0 24px; border-bottom:1px solid #d9bd9a; padding-bottom:16px; }
+    .theory-subheading h3 { margin:0; font:600 clamp(1.5rem,3vw,2.2rem) Georgia,serif; color:#38251c; }
+    .theory-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:stretch; }
+    .theory-card { padding:26px 28px; background:#fff; border:1px solid #e8ded1; border-radius:16px; box-shadow:0 12px 32px #38251c0a; min-width:0; }
+    .theory-tag { display:inline-block; margin-bottom:10px; color:#8b613c; background:#f6ecdc; border-radius:30px; padding:6px 11px; font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+    .theory-card h3 { margin:0 0 16px; color:#38251c; font:600 1.35rem/1.3 Georgia,serif; }
+    .theory-copy { color:#514840; font-size:.96rem; line-height:1.72; text-align:justify; overflow-wrap:anywhere; }
+    .theory-copy p { margin:0 0 12px; }
+    .theory-copy ul { padding-left:22px; margin:6px 0 15px; }
+    .theory-copy li { padding:2px 0 2px 3px; }
+    .theory-card:nth-child(3n) { background:#fffcf7; }
+    @media(max-width:850px){ .theory-intro-grid{grid-template-columns:1fr;} .theory-grid{grid-template-columns:1fr;} .hero-banner{max-height:none;} }
+
+
+    /* Directorio lateral: independiente del menú superior y de las secciones de inicio. */
+    .side-toggle{position:fixed;left:0;top:43%;z-index:1050;border:1px solid #c6a87d;border-left:0;border-radius:0 12px 12px 0;background:#39261e;color:#f8eddd;box-shadow:4px 9px 24px #24150f35;padding:18px 11px;display:flex;align-items:center;gap:8px;writing-mode:vertical-rl;letter-spacing:.16em;font-size:10px;font-weight:800;cursor:pointer;transition:background .25s,transform .25s}
+    .side-toggle:hover{background:#6b4530;transform:translateX(3px)}
+    .side-toggle-icon{font-size:17px;line-height:1;writing-mode:horizontal-tb}
+    .side-panel{position:fixed;top:0;bottom:0;left:0;width:min(370px,88vw);z-index:1101;background:#2b1d17;color:#f4e8d7;box-shadow:20px 0 60px #130c0860;transform:translateX(-105%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),visibility .35s;display:flex;flex-direction:column;overflow-y:auto}
+    .side-panel.open{transform:translateX(0);visibility:visible}
+    .side-overlay{position:fixed;inset:0;z-index:1100;background:#140b08a6;backdrop-filter:blur(3px)}
+    .side-overlay[hidden]{display:none}
+    .side-header{display:flex;align-items:center;gap:13px;padding:34px 27px 26px;border-bottom:1px solid #ffffff20}
+    .side-monogram{height:56px;width:56px;flex:none;border:1px solid #b58a59;border-radius:12px;display:block;object-fit:contain;background:#fff8ee;padding:3px}
+    .side-header>div:nth-child(2){display:flex;flex-direction:column;gap:5px;min-width:0}
+    .side-kicker{color:#c4a07b;letter-spacing:.18em;font-size:9px;font-weight:800}
+    .side-header strong{font:18px Georgia,serif;color:#fff9ef}
+    .side-close{margin-left:auto;align-self:flex-start;border:0;background:transparent;color:#d9c6b5;font-size:28px;cursor:pointer;line-height:1}
+    .side-rule{display:flex;align-items:center;gap:12px;margin:28px 27px 12px;color:#b99b7b;font-size:9px;letter-spacing:.22em;font-weight:800}
+    .side-rule span{height:1px;flex:1;background:#ffffff24}
+    .side-links{padding:0 15px;display:flex;flex-direction:column;gap:5px}
+    .side-links a{display:flex;align-items:center;gap:13px;padding:16px 13px;border-radius:10px;color:#e7d7c8;text-decoration:none;border:1px solid transparent;transition:background .2s,border-color .2s,transform .2s}
+    .side-links a:hover,.side-links a:focus-visible{background:#ffffff0d;border-color:#c49a6240;transform:translateX(3px)}
+    .side-links a.active{background:#b58a5922;border-color:#b58a5960;color:#fff}
+    .side-number{font:italic 14px Georgia,serif;color:#caa575;flex:none}
+    .side-label{font-size:13px;font-weight:600;line-height:1.45;flex:1}
+    .side-arrow{font-size:15px;color:#c49a62;flex:none}
+    .side-bottom{margin-top:auto;padding:28px 27px 33px;color:#bda58e;font-size:9px;letter-spacing:.12em;line-height:1.9}
+    .side-bottom-line{display:block;width:38px;height:2px;background:#bc9568;margin-bottom:17px}
+    body.side-open{overflow:hidden}
+    @media(max-width:760px){.side-toggle{top:auto;bottom:23px;left:16px;border:1px solid #c6a87d;border-radius:50px;writing-mode:horizontal-tb;padding:14px 18px;box-shadow:0 9px 26px #24150f45;font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.side-panel,.side-toggle,.side-links a{transition:none}}
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <img class="brand-logo" src="Perfil FB.png" alt="Logo de Consultorías en Derecho Mercantil y Corporativas">
+        <span class="brand-name">CONSULTORÍAS MERCANTILES<span class="brand-sub">Derecho Mercantil y Corporativas</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#equipo">Quiénes somos</a>
+        <a href="#teoria">Teoría</a>
+        <a href="#contratos">Contratos</a>
+        <a href="#teoria">Teoría mercantil</a>
+        <a class="nav-cta" href="#contacto">Explorar el portal ↗</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- Menú lateral de páginas independientes (se crearán posteriormente). -->
+  <button class="side-toggle" id="sideToggle" type="button" aria-label="Abrir menú de secciones" aria-controls="sidePanel" aria-expanded="false">
+    <span class="side-toggle-icon">☰</span><span>SECCIONES</span>
+  </button>
+  <div class="side-overlay" id="sideOverlay" hidden></div>
+  <aside class="side-panel" id="sidePanel" aria-label="Páginas del portal">
+    <div class="side-header">
+      <img class="side-monogram" src="Perfil FB.png" alt="Logo original de la firma">
+      <div><span class="side-kicker">PORTAL JURÍDICO</span><strong>Directorio de secciones</strong></div>
+      <button type="button" class="side-close" id="sideClose" aria-label="Cerrar menú lateral">×</button>
+    </div>
+    <div class="side-rule"><span></span> NAVEGACIÓN <span></span></div>
+    <nav class="side-links" aria-label="Secciones del sitio">
+      <a class="active" href="index.html" aria-current="page"><span class="side-number">01</span><span class="side-label">Página de inicio</span><span class="side-arrow">↗</span></a>
+      <a href="fichas-tecnicas-casos-practicos.html"><span class="side-number">02</span><span class="side-label">Fichas técnicas y casos prácticos</span><span class="side-arrow">↗</span></a>
+      <a href="recursos-descargables.html"><span class="side-number">03</span><span class="side-label">Sección de recursos descargables</span><span class="side-arrow">↗</span></a>
+      <a href="testimonios-preguntas-frecuentes.html"><span class="side-number">04</span><span class="side-label">Testimonios y preguntas frecuentes</span><span class="side-arrow">↗</span></a>
+      <a href="actualizaciones-noticias.html"><span class="side-number">05</span><span class="side-label">Actualizaciones y noticias</span><span class="side-arrow">↗</span></a>
+      <a href="vlog-multimedia.html"><span class="side-number">06</span><span class="side-label">Vlog y multimedia</span><span class="side-arrow">↗</span></a>
+      <a href="contacto.html"><span class="side-number">07</span><span class="side-label">Contacto y redes sociales</span><span class="side-arrow">↗</span></a>
+    </nav>
+    <div class="side-bottom"><span class="side-bottom-line"></span>CONSULTORÍAS EN DERECHO MERCANTIL<br>Y CORPORATIVAS</div>
+  </aside>
+
+  <main>
+    <section class="hero-banner-wrap" aria-label="Portada de la firma"><a class="hero-banner-link" href="#inicio"><img class="hero-banner" src="Portada FB.png" alt="Portada de Consultorías en Derecho Mercantil y Corporativas"></a></section>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-text reveal">
+          <div class="eyebrow">Portal de información mercantil</div>
+          <h1>El conocimiento jurídico, <em>con visión empresarial.</em></h1>
+          <p class="hero-copy">
+            Un espacio de consulta que reúne conceptos, contratos mercantiles y recursos
+            informativos para explorar el marco jurídico de las relaciones comerciales.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="#contratos">Explorar contratos <span>↗</span></a>
+            <a class="btn btn-outline" href="#equipo">Conocer al equipo</a>
+          </div>
+        </div>
+        <div class="hero-visual reveal reveal-delay-2">
+          <img class="hero-photo"
+            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1100&q=85"
+            alt="Libros y documentos en un entorno jurídico">
+          <div class="hero-caption">“La claridad es el punto de partida de toda buena decisión.”</div>
+          <div class="hero-stamp">
+            <strong>Derecho<br>mercantil</strong>
+            <span>Conceptos, modalidades contractuales y recursos de consulta.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="quick-strip">
+      <div class="container quick-grid">
+        <a class="quick-item reveal" href="#contratos">
+          <span class="quick-icon" aria-hidden="true">§</span>
+          <span><strong>Contratos mercantiles</strong><span>Modalidades típicas y atípicas</span></span>
+        </a>
+        <a class="quick-item reveal reveal-delay-1" href="#conflictos">
+          <span class="quick-icon" aria-hidden="true">⚖</span>
+          <span><strong>Resolución de conflictos</strong><span>Métodos alternativos</span></span>
+        </a>
+        <a class="quick-item reveal reveal-delay-2" href="recursos-descargables.html">
+          <span class="quick-icon" aria-hidden="true">▤</span>
+          <span><strong>Fichas y documentos</strong><span>Material de consulta</span></span>
+        </a>
+      </div>
+    </div>
+
+
+<section class="theory-section" id="teoria">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="section-kicker">Biblioteca de conocimiento</div>
+      <h2>Teoría mercantil <span>en un solo lugar.</span></h2>
+      <p>Consulta los conceptos y explicaciones del documento base organizados en cuadros temáticos. El contenido se mantiene según el material proporcionado.</p>
+    </div>
+    <div class="theory-intro-grid">
+      <article class="theory-intro reveal"><span>01</span><h3>Contratos típicos</h3><p>Figuras contractuales desarrolladas en el documento, como compraventa, suministro, crédito, depósito, transporte, seguro y leasing.</p><a href="#contratos-tipicos">Ir a contratos típicos ↓</a></article>
+      <article class="theory-intro reveal reveal-delay-1"><span>02</span><h3>Contratos atípicos</h3><p>Modalidades modernas como franquicia, distribución, know-how, renting, joint venture y transferencia de tecnología.</p><a href="#contratos-atipicos">Ir a contratos atípicos ↓</a></article>
+      <article class="theory-intro reveal reveal-delay-2"><span>03</span><h3>Resolución de conflictos</h3><p>Negociación, mediación, conciliación y arbitraje, junto con aspectos prácticos incluidos en el documento.</p><a href="#conflictos">Ir a métodos ↓</a></article>
+    </div>
+    <div class="theory-subheading" id="contratos-tipicos"><span>01</span><h3>Contratos típicos</h3></div>
+    <div class="theory-grid">
+      <article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.2 COMPRAVENTA MERCANTIL</h3>
+      <div class="theory-copy"><p>Es aquel por el cual uno de los contratantes el vendedor se obliga a transferir la propiedad de una cosa o de un derecho, y el otro (comprador) a su vez, se obliga a pagar por ellos un precio cierto y en dinero.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.3 Contrato de Suministro</h3>
+      <div class="theory-copy"><p>El contrato de suministro es un tipo particular contrato mediante el cual el proveedor (o suministrador) se compromete a realizar en el tiempo una serie de prestaciones periódicas, determinadas o indeterminadas, a cambio del pago de un precio, que puede ser unitario o por cada prestación periódica.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.4 Contrato estimatorio</h3>
+      <div class="theory-copy"><p>El contrato estimatorio es aquel contrato mercantil por medio del cual una de las partes, denominada consignante, entrega a otra, denominada consignatario, uno o varios bienes muebles a un precio estimado, para que en un plazo fijado se pague dicho precio o bien se devuelvan las mercancías.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.5 Contrato De Licencia De Uso</h3>
+      <div class="theory-copy"><p>El contrato de licencia de uso como un acuerdo bilateral por el cual una parte, el titular de los derechos de explotación del programa de ordenador el licenciante, otorga a la otra parte, el usuario o cliente el licenciado, el derecho a utilizar el programa a cambio de un precio, conservando el titular la propiedad sobre el mismo.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.6 Contrato De Deposito Mercantil</h3>
+      <div class="theory-copy"><p>Es aquel por virtud del cual el depositario se obliga hacia el depositante a recibir una cosa mueble objeto de comercio, que aquel le confía y a guardarla para restituirla cuando la pida el depositante, o bien a recibir bienes fungibles con la obligación de restituir otro tanto de la misma especie y calidad.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.7 Contrato de apertura de crédito</h3>
+      <div class="theory-copy"><p>Es el contrato por el cual una entidad financiera o comerciante se obliga a poner una suma de dinero a disposición del acreditado, dentro del límite y durante el plazo pactados, para que este pueda utilizarla total o parcialmente y restituir lo utilizado, junto con los intereses, comisiones y demás cargos convenidos. En Guatemala, el Código de Comercio regula la apertura de crédito en los artículos 718 a 728. El contrato debe dejar claros el límite, plazo, forma de disposición, tasa o método de cálculo, comisiones, garantías y forma de pago.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.8 Contrato de factura y descuento</h3>
+      <div class="theory-copy"><p>Factura: documento que acredita la operación de compraventa o prestación de servicios y la obligación de pago correspondiente. Cuando reúna los requisitos legales y tributarios aplicables, puede servir como soporte de la cuenta por cobrar; la factura cambiaria tiene además la función y requisitos propios de un título de crédito conforme al Código de Comercio.</p><p>Descuento: operación mediante la cual el legítimo tenedor transmite o negocia una factura cambiaria u otro título de crédito antes de su vencimiento y recibe anticipadamente su valor, menos una suma por descuento, intereses, comisiones y gastos pactados. En Guatemala, el descuento de facturas y otros documentos se complementa con el Decreto 1-2018, Ley de Contratos de Factoraje y de Descuento, por lo que deben revisarse sus requisitos y efectos junto con el Código de Comercio.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.9 Contrato de cuenta corriente</h3>
+      <div class="theory-copy"><p>Es el contrato por el cual las partes registran en una cuenta común los créditos y débitos derivados de sus relaciones comerciales, de modo que los cargos y abonos se compensan y únicamente el saldo exigible queda determinado al cierre o en la fecha convenida. El Código de Comercio regula la cuenta corriente en los artículos 734 a 743. Deben precisarse el período de liquidación, la forma de aprobación del estado de cuenta, los intereses, las comisiones y el momento en que el saldo se vuelve exigible.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.10 Contrato de reporto</h3>
+      <div class="theory-copy"><p>Es el contrato por el cual una persona —reportador— adquiere por una suma de dinero la propiedad de títulos de crédito y se obliga a transferir al reportado otros títulos de la misma especie a un precio igualmente determinado, contra el reembolso del precio más un premio. En Guatemala, el reporto está regulado en los artículos 744 y 745 del Código de Comercio. El contrato debe identificar los títulos, precio, plazo, premio, custodia, márgenes y consecuencias del incumplimiento.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.11 Contrato de cartas órdenes de crédito</h3>
+      <div class="theory-copy"><p>La carta orden de crédito es el documento por el cual una persona, llamada dador, ordena a otra, llamada destinatario, que entregue dinero a un tercero determinado, llamado tomador, hasta una cantidad fija o un máximo, y se compromete a responder por lo que se pague conforme a ella. El Código de Comercio exige que estas cartas se expidan “en favor de persona determinada y no serán negociables” (Congreso de la República de Guatemala, 1970, art. 750).</p><p>No se aceptan ni se protestan, el dador puede revocarlas mientras no se haya hecho el pago y, si no se fija un plazo, vencen al año de su expedición. El tomador debe reembolsar al dador lo que reciba, más los intereses legales, salvo pacto distinto (Congreso de la República de Guatemala, 1970, arts. 751, 753, 755 y 756).</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.12 Contrato de crédito documentario</h3>
+      <div class="theory-copy"><p>Es el principal medio de pago del comercio internacional: el banco emisor paga al vendedor cuando este presenta los documentos exigidos, después de verificar que aparentemente están en debida forma, y esa obligación es independiente de la compraventa que le da origen. Si el crédito es irrevocable, solo puede modificarse con la conformidad de todos los interesados y, si no tiene vencimiento, vale seis meses desde que se notifica al beneficiario</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.13 Contrato de fideicomiso de inversión</h3>
+      <div class="theory-copy"><p>El fideicomiso de inversión es la modalidad cuyo fin es invertir los bienes fideicometidos para generar rendimientos a favor del fideicomisario. La Ley del Mercado de Valores y Mercancías lo regula de forma expresa, permite que el fiduciario delegue la administración en un agente de bolsa y que se emitan certificados fiduciarios inscritos en el Registro del Mercado de Valores y Mercancías Sin autorización expresa del fideicomitente, el fiduciario solo puede invertir en bonos o títulos de reconocida solidez y debe rendir cuentas al menos una vez al año (Congreso de la República de Guatemala, 1970, arts. 784 y 785).</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.14 Contrato de transporte</h3>
+      <div class="theory-copy"><p>Por el contrato de transporte, el porteador se obliga, a cambio de un precio, a conducir de un lugar a otro pasajeros o mercaderías ajenas, que debe entregar al consignatario (Congreso de la República de Guatemala, 1970, art. 794). Sus normas se aplican al transporte terrestre, acuático y aéreo, y el porteador responde aunque utilice los servicios de terceros (arts. 795 y 796).</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.15 Contrato de participación</h3>
+      <div class="theory-copy"><p>El contrato de participación también conocido doctrinalmente como asociación en participación es un contrato mercantil y de colaboración empresarial por el cual un comerciante o entidad denominado participante aporta bienes o servicios a favor de otro comerciante o sociedad denominado gestor, a cambio de una participación en las utilidades o pérdidas que resulte de uno o varios negocios o de la totalidad de la actividad del gestor.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.16 Contrato de hospedaje</h3>
+      <div class="theory-copy"><p>El contrato de hospedaje es una figura fundamental en el Derecho Mercantil, mediante la cual un comerciante o empresa presta el servicio de albergue temporal a una persona a cambio de una suma de dinero.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.17 Contrato de seguro</h3>
+      <div class="theory-copy"><p>El contrato de seguro es un acuerdo mercantil, bilateral, oneroso, aleatorio y de adhesión por el cual una parte el asegurador se obliga, mediante el cobro de una prima, a indemnizar a otra parte el asegurado o beneficiario un daño o a pagar un capital, renta o prestación al verificarse un evento incierto o siniestro previamente previsto en la póliza.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.18 Contrato de fianza</h3>
+      <div class="theory-copy"><p>Es el contrato mercantil en virtud del cual una entidad mercantil legalmente autorizada denominada afianzadora o aseguradora de caución, a cambio del pago de una prima, se compromete frente a un acreedor beneficiario a responder y cumplir por la obligación de un tercero deudor principal o fiado en caso de que este la incumpla.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.19 Contrato de bolsa</h3>
+      <div class="theory-copy"><p>Los contratos de bolsa son aquellos negocios jurídicos mediante los cuales se crean, modifican, extinguen o transmiten obligaciones mercantiles que se contraen y liquidan en el seno de una bolsa de comercio. Constituyen instrumentos jurídicos estandarizados que dinamizan la circulación de capitales, bienes y servicios financieros.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.20 Contrato de fondos de inversión</h3>
+      <div class="theory-copy"><p>Es aquel por el cual un inversor entrega una suma de dinero a una sociedad gestora para que la integre a un fondo común, el cual es administrado por expertos e invertido en diversos títulos valores o activos para obtener rentabilidad.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.21 Contrato de futuros</h3>
+      <div class="theory-copy"><p>Es un contrato derivado por el cual las partes se obligan a comprar o vender un activo subyacente (acciones, divisas, mercancías) a un precio fijado en el presente, pero cuya entrega y pago se realizarán en una fecha futura determinada.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.22 Contrato colectivo de valores</h3>
+      <div class="theory-copy"><p>Es el contrato por medio del cual una entidad especializada (caja de valores o entidad de custodia) recibe en depósito títulos valores o instrumentos financieros de múltiples depositarlingas/agentes, obligándose a custodiarlos, llevar su registro contable en anotaciones en cuenta y restituir títulos equivalentes o el valor de los mismos.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1.23 Contrato de Leasing</h3>
+      <div class="theory-copy"><p>Definición: Es el contrato mediante el cual el arrendador adquiere para uso del arrendatario bienes a cambio de una renta o cuota por un plazo determinado; el contrato de leasing comprende el contrato de leasing financiero y el contrato de leasing operativo.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato típico</span>
+      <h3>1. Negociación directa</h3>
+      <div class="theory-copy"><p>La **negociación** es el mecanismo más sencillo. Las partes involucradas dialogan directamente, o por medio de sus abogados, con el objetivo de alcanzar un acuerdo.</p><p>En este procedimiento no interviene un tercero que imponga una decisión. Las propias partes controlan tanto el proceso como el resultado.</p><p>Ejemplos en materia mercantil</p><p>La negociación puede utilizarse en casos relacionados con:</p><ul><li>Incumplimiento en el pago de facturas.</li><li>Retraso en la entrega de mercaderías.</li><li>Disputas sobre precios o cantidades.</li><li>Incumplimiento de contratos de suministro.</li><li>Conflictos entre socios.</li><li>Terminación de contratos de distribución o representación.</li><li>Reestructuración de deudas comerciales.</li></ul><p>Ventajas</p><ul><li>Es rápida.</li><li>Tiene costos reducidos.</li><li>Permite conservar las relaciones comerciales.</li><li>Es flexible y confidencial.</li><li>Las partes pueden diseñar una solución conforme a sus intereses.</li></ul><p>Precauciones</p><p>Todo acuerdo debe documentarse claramente. Es conveniente establecer:</p><ul><li>Las obligaciones de cada parte.</li><li>Los plazos de cumplimiento.</li><li>Las garantías.</li><li>La forma de pago.</li><li>Las consecuencias del incumplimiento.</li><li>La posibilidad de acudir posteriormente a arbitraje o tribunales.</li></ul></div>
+    </article>
+    </div>
+    <div class="theory-subheading" id="contratos-atipicos"><span>02</span><h3>Contratos atípicos</h3></div>
+    <div class="theory-grid">
+      <article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.1 Contrato de franquicia</h3>
+      <div class="theory-copy"><p>Contrato mercantil atípico y conexo en virtud del cual una parte llamada Franquiciante o Franquiciador concede a otra llamada Franquiciado, el derecho de explotar un modelo de negocio probado, concediendo la licencia de uso de marcas y signos distintivos, la transferencia de conocimientos técnicos y operativos (Know-How).</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.2 Contrato de distribución</h3>
+      <div class="theory-copy"><p>En el Derecho Mercantil guatemalteco, la distribución es un contrato mercantil típico y nominado, de carácter bilateral, oneroso, de tracto sucesivo, de colaboración empresarial y celebrado entre comerciantes independientes.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.3 Contrato de Club de Campo</h3>
+      <div class="theory-copy"><p>El contrato de Club de Campo es un contrato atípico mercantil y de adhesión, de naturaleza multiparte o bilateral, de tracto sucesivo, complejo y conexo. Combina elementos del derecho de propiedad o membresía corporativa con el arrendamiento de servicios, concesión de uso de instalaciones y normativas de convivencia.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.4 Contrato de know how</h3>
+      <div class="theory-copy"><p>El contrato de know-how, también llamado contrato de transferencia de conocimientos técnicos, es un acuerdo mediante el cual una persona o empresa permite a otra utilizar conocimientos prácticos, procedimientos, fórmulas, métodos de trabajo o experiencias comerciales que tienen valor económico y que normalmente se mantienen reservados.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.5 Contrato de renting</h3>
+      <div class="theory-copy"><p>Es un acuerdo por el cual un proveedor permite a una persona o empresa utilizar temporalmente un bien a cambio de cuotas periódicas. Puede incluir servicios adicionales, como seguro, mantenimiento o asistencia, cuando así se pacte.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.6 Contrato de underwriting</h3>
+      <div class="theory-copy"><p>Es un acuerdo mercantil y financiero en el que una entidad financiera (como un banco de inversión o comercial) se compromete a prefinanciar, suscribir o colocar en el mercado público los títulos valores (acciones, bonos u obligaciones) emitidos por una sociedad comercial para facilitarle el acceso a capital.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.7 Contrato de joint venture</h3>
+      <div class="theory-copy"><p>Un contrato de joint venture (o &quot;emprendimiento conjunto&quot;) es un acuerdo comercial de colaboración entre dos o más empresas o personas que se unen para realizar un proyecto específico con fines de lucro, sin perder su independencia jurídica ni fusionarse.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.8 contrato de concesión</h3>
+      <div class="theory-copy"><p>Un contrato de concesión es un acuerdo por el cual una parte (el concedente, que puede ser el Estado o un propietario/industrial) otorga a otra (el concesionario) el derecho de explotar por su cuenta y riesgo un servicio, obra, marca o producto a cambio de una contraprestación económica.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.9 Contrato de transferencia de tecnología</h3>
+      <div class="theory-copy"><p>El contrato de transferencia de tecnología es utilizado para la transmisión de derechos derivados de la propiedad industrial. Para la transmisión de los derechos relativos a los conocimientos en materia de procedimientos de fabricación empresarial conocidos como Know How, así como también de servicios que incluyen asistencia técnica en materia empresarial.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.10 Contrato de tiempo compartido</h3>
+      <div class="theory-copy"><p>Es una forma de contratación moderna el cual se le puede conocer como Contrato de asistencia administrativa, contrato de empresa, contrato de administración, contrato de gestión gerencial y contrato de dirigencia de empresa. A estos tipos de contratos se les considera como el nuevo modelo de empresa en la economía capitalista del tercer milenio.</p><p>Un contrato de asistencia administrativa es aquel que ha surgido dentro de las entidades mercantiles para verificar ciertos aspectos de esta.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.11 Modelo del Contrato de pool aeronáutico</h3>
+      <div class="theory-copy"><p>Regula, estudia y elabora las diferentes regulaciones y leyes aplicables a las empresas que ofrecen los servicios del transporte aéreo como las personas que utilizan este servicio, así como la creación de las normas que rigen a los estados en el campo de la aeronavegación.</p><p>Es el conjunto de principios y normas de Derecho Público y Privado, de orden interno e internacional que rigen las instituciones y relaciones jurídicas nacidas de la actividades aeronáuticas o modificadas por ella.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.12 Contrato de asistencia administrativa</h3>
+      <div class="theory-copy"><p>Es una forma de contratación moderna el cual se le puede conocer como Contrato de asistencia administrativa, contrato de empresa, contrato de administración, contrato de gestión gerencial y contrato de dirigencia de empresa. A estos tipos de contratos se les considera como el nuevo modelo de empresa en la economía capitalista del tercer milenio.</p><p>Un contrato de asistencia administrativa es aquel que ha surgido dentro de las entidades mercantiles para verificar ciertos aspectos de esta.</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Contrato atípico</span>
+      <h3>2.13 Contrato de informática</h3>
+      <div class="theory-copy"><p>Es un complejo de contrato de transferencias de tecnologías, particularmente. En lo que a los bienes y/o servicios informativos conjuntamente con las obligaciones relativas, al suministro de soluciones técnicas para ciertos problemas concretos. De acuerdo de voluntades y el concepto informático señala que las obligaciones que se adquieren se encuentren relacionadas con algún bien o derecho que surja de la informática.</p></div>
+    </article>
+    </div>
+    <div class="theory-subheading" id="conflictos"><span>03</span><h3>Métodos alternativos para la resolución de conflictos</h3></div>
+    <div class="theory-grid">
+      <article class="theory-card reveal">
+      <span class="theory-tag">Resolución de conflictos</span>
+      <h3>3 Mediación</h3>
+      <div class="theory-copy"><p>La **mediación** es un procedimiento en el que interviene un tercero neutral llamado mediador. Su función consiste en facilitar la comunicación entre las partes y ayudarlas a identificar posibles soluciones.</p><p>El mediador no impone una decisión. La solución depende exclusivamente de la voluntad de las partes.</p><p>Aplicación mercantil</p><p>La mediación puede ser útil en:</p><ul><li>Conflictos entre accionistas o socios.</li><li>Contratos de franquicia.</li><li>Contratos de distribución.</li><li>Relaciones entre proveedores y clientes.</li><li>Contratos de construcción.</li><li>Conflictos por prestación de servicios.</li><li>Controversias sobre propiedad intelectual.</li><li>Diferencias entre empresas familiares.</li></ul><p>Ventajas</p><ul><li>Permite conservar la relación comercial.</li><li>Facilita soluciones creativas.</li><li>Reduce la confrontación.</li><li>Puede ser menos costosa que un juicio.</li><li>Protege la confidencialidad de las negociaciones.</li></ul><p>Aspectos importantes</p><p>Antes de iniciar una mediación conviene determinar:</p><ul><li>Quiénes participarán.</li><li>Qué facultades tienen los representantes.</li><li>Qué información será confidencial.</li><li>Cuáles son los puntos negociables y no negociables.</li><li>Cómo se formalizará el acuerdo final.</li><li></li></ul></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Resolución de conflictos</span>
+      <h3>4. Conciliación</h3>
+      <div class="theory-copy"><p>La **conciliación** también utiliza la intervención de un tercero neutral. Sin embargo, el conciliador puede tener una participación más activa y formular propuestas concretas de solución.</p><p>A diferencia del arbitraje, el conciliador no impone una decisión. El acuerdo únicamente será obligatorio cuando las partes lo acepten y lo formalicen.</p><p>En Guatemala, la conciliación puede desarrollarse fuera del proceso judicial o dentro de este. El Organismo Judicial señala que, en ciertos procesos, el juez puede convocar a las partes para procurar un acuerdo, el cual puede documentarse y adquirir fuerza legal para su ejecución. ([1.7.1 Métodos alternativos de resolución de conflictos regulados dentro de un proceso judicial](https://biblioteca.oj.gob.gt/digitales/55669.pdf?utm_source=openai))</p><p>Ejemplos de uso</p><ul><li>Cobro de obligaciones mercantiles.</li><li>Incumplimiento de contratos.</li><li>Disputas entre socios.</li><li>Diferencias entre arrendador y arrendatario comercial.</li><li>Conflictos derivados de compraventas mercantiles.</li><li>Reclamaciones por daños en productos o servicios.</li></ul><p>Ventajas</p><ul><li>Permite que un tercero proponga alternativas.</li><li>Puede evitar un proceso judicial prolongado.</li><li>Facilita acuerdos económicos.</li><li>Reduce costos y tiempos.</li><li>Puede formalizarse mediante acta o convenio.</li></ul></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Resolución de conflictos</span>
+      <h3>5. Arbitraje</h3>
+      <div class="theory-copy"><p>El **arbitraje** es un mecanismo mediante el cual las partes someten su controversia a uno o varios árbitros. El tribunal arbitral analiza el caso y emite una decisión denominada **laudo arbitral**.</p><p>A diferencia de la negociación, la mediación y la conciliación, en el arbitraje la decisión final no depende de que ambas partes lleguen voluntariamente a un acuerdo durante el procedimiento.</p><p>En Guatemala, el arbitraje está regulado principalmente por el **Decreto 67-95, Ley de Arbitraje**. Esta ley regula el arbitraje nacional y el internacional cuando la sede se encuentra en Guatemala, además del acuerdo arbitral, la competencia del tribunal, el procedimiento y el laudo. ([Congreso de la República de Guatemala](https://www.congreso.gob.gt/detalle_pdf/decretos/1106?utm_source=openai))</p><p>Requisito principal</p><p>Para acudir al arbitraje normalmente debe existir:</p><ul><li>Una cláusula arbitral incluida en el contrato; o</li><li>Un convenio arbitral celebrado después de surgida la controversia.</li></ul><p>Elementos recomendables de una cláusula arbitral</p><p>Una cláusula arbitral debería establecer, cuando sea posible:</p><p>1. La institución que administrará el arbitraje.</p><p>2. Si será arbitraje institucional o ad hoc.</p><p>3. La sede del arbitraje.</p><p>4. El idioma del procedimiento.</p><p>5. El número de árbitros.</p><p>6. La forma de designación de los árbitros.</p><p>7. Las reglas procesales aplicables.</p><p>8. La materia sometida a arbitraje.</p><p>9. La distribución de los costos.</p><p>Ventajas</p><ul><li>Permite contar con árbitros especializados.</li><li>Puede ser más flexible que un proceso judicial.</li><li>Ofrece mayor confidencialidad.</li><li>Permite elegir reglas y sede.</li><li>Puede facilitar la resolución de controversias técnicas.</li></ul><p>Limitaciones</p><ul><li>Puede generar costos elevados.</li><li>Requiere un acuerdo arbitral válido.</li><li>No todas las materias pueden someterse a arbitraje.</li><li>El laudo debe ejecutarse conforme a la legislación aplicable.</li><li>Es necesario revisar oportunamente la posibilidad de solicitar medidas cautelares.</li></ul></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Resolución de conflictos</span>
+      <h3>6. Diferencias entre los principales métodos</h3>
+      <div class="theory-copy"><p>La negociación, mediación y conciliación son mecanismos principalmente consensuales. El arbitraje, en cambio, es un mecanismo adjudicativo, porque el árbitro emite una decisión sobre la controversia. ([B. Métodos alternativos de resolución de</p></div>
+    </article><article class="theory-card reveal">
+      <span class="theory-tag">Resolución de conflictos</span>
+      <h3>7. Procedimiento recomendado para un conflicto mercantil</h3>
+      <div class="theory-copy"><p>Ante una controversia mercantil en Guatemala, puede seguirse la siguiente ruta:</p><p>Paso 1: Revisar la documentación</p><p>Debe analizarse:</p><ul><li>El contrato.</li><li>Las facturas.</li><li>Las órdenes de compra.</li><li>Las comunicaciones.</li><li>Las garantías.</li><li>Las actas societarias.</li><li>Los comprobantes de pago.</li><li>Las pruebas del incumplimiento.</li></ul><p>Paso 2: Revisar la cláusula de solución de controversias</p><p>Es importante verificar si el contrato contiene una cláusula de:</p><ul><li>Negociación.</li><li>Mediación.</li><li>Conciliación.</li><li>Arbitraje.</li><li>Jurisdicción de los tribunales ordinarios.</li></ul><p>Paso 3: Determinar la urgencia</p><p>Debe establecerse si se necesitan:</p><ul><li>Medidas cautelares.</li><li>Embargos.</li><li>Suspensión de actos.</li><li>Protección de bienes.</li><li>Conservación de pruebas.</li><li>Una decisión inmediata.</li></ul><p>Paso 4: Intentar una negociación</p><p>Cuando sea conveniente, puede enviarse una propuesta formal que indique:</p><ul><li>El incumplimiento identificado.</li><li>La solución solicitada.</li><li>El plazo para responder.</li><li>La reserva de derechos.</li><li>La posibilidad de iniciar acciones legales.</li></ul><p>Paso 5: Elegir el mecanismo adecuado</p><ul><li>**Negociación:** cuando existe buena comunicación entre las partes.</li><li>**Mediación:** cuando se desea preservar la relación comercial.</li><li>**Conciliación:** cuando se necesita que un tercero proponga soluciones.</li><li>**Arbitraje:** cuando se requiere una decisión vinculante y existe un acuerdo arbitral.</li></ul><p>Paso 6: Formalizar el resultado</p><p>El acuerdo debe establecer claramente:</p><ul><li>Las obligaciones asumidas.</li><li>Las fechas de cumplimiento.</li><li>Las formas de pago.</li><li>Las garantías.</li><li>Las penalizaciones.</li><li>El procedimiento en caso de incumplimiento.</li></ul></div>
+    </article>
+    </div>
+  </div>
+</section>
+
+    <section class="roles-section" id="equipo">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-kicker">Quiénes somos</div>
+          <h2>Las personas detrás <span>del proyecto.</span></h2>
+          <p>Un equipo organizado por funciones para recopilar, estructurar y comunicar información sobre derecho mercantil.</p>
+        </div>
+
+        <div class="roles-grid">
+          <article class="role-card reveal">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Anderson_Batz.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">01</span>
+            </div>
+            <div class="role-info"><h3>Anderson Batz</h3><span class="role-title">Coordinador</span></div>
+          </article>
+          <article class="role-card reveal reveal-delay-1">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Arlemi_Garcia.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">02</span>
+            </div>
+            <div class="role-info"><h3>Arlemi Garcia</h3><span class="role-title">Coordinadora</span></div>
+          </article>
+          <article class="role-card reveal reveal-delay-2">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Helen_Tacam.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">03</span>
+            </div>
+            <div class="role-info"><h3>Helen Tacam</h3><span class="role-title">Compiladora de información</span></div>
+          </article>
+          <article class="role-card reveal reveal-delay-3">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Yusvin_Perez.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">04</span>
+            </div>
+            <div class="role-info"><h3>Yusvin Pérez</h3><span class="role-title">Compilador de información</span></div>
+          </article>
+          <article class="role-card reveal">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Ana_Lucia_Garcia_Salas.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">05</span>
+            </div>
+            <div class="role-info"><h3>Ana Lucia Garcia-Salas</h3><span class="role-title">Comunicadora</span></div>
+          </article>
+          <article class="role-card reveal reveal-delay-1">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Dany_Tzul.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">06</span>
+            </div>
+            <div class="role-info"><h3>Dany Tzul</h3><span class="role-title">Comunicador</span></div>
+          </article>
+          <article class="role-card reveal reveal-delay-2">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Alexandra_Chavaloc.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">07</span>
+            </div>
+            <div class="role-info"><h3>Alexandra Chavaloc</h3><span class="role-title">Diseñadora gráfica</span></div>
+          </article>
+          <article class="role-card reveal reveal-delay-3">
+            <div class="role-photo-wrap">
+              <img class="role-photo" src="Antony_Gutierrez.png" alt="Fotografía del integrante del equipo">
+              <span class="role-number">08</span>
+            </div>
+            <div class="role-info"><h3>Antony Gutierrez</h3><span class="role-title">Diseñador gráfico</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="contratos">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-kicker">Biblioteca mercantil</div>
+          <h2>Explora las modalidades <span>contractuales.</span></h2>
+          <p>Consulta las secciones de contratos contempladas en el material del proyecto. Cada categoría podrá ampliarse en su propia página.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card typical reveal">
+            <span class="feature-tag">Sección 01 · Definiciones</span>
+            <h3>Contratos típicos</h3>
+            <p>Conceptos y definiciones de figuras contractuales mercantiles, desde compraventa y suministro hasta transporte, seguro y leasing.</p>
+            <a class="text-link" href="recursos-descargables.html">Ver sección de contratos <span>→</span></a>
+          </article>
+          <article class="feature-card atypical reveal reveal-delay-1">
+            <span class="feature-tag">Sección 02 · Definiciones</span>
+            <h3>Contratos atípicos</h3>
+            <p>Información sobre figuras como franquicia, know-how, renting, underwriting, joint venture y transferencia de tecnología.</p>
+            <a class="text-link" href="recursos-descargables.html">Ver sección de contratos <span>→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contacto">
+      <div class="container">
+        <div class="cta-panel reveal">
+          <div>
+            <div class="section-kicker">Información organizada</div>
+            <h2>Una perspectiva clara del derecho mercantil.</h2>
+            <p>Explora las secciones del portal y accede a los materiales de referencia reunidos para este proyecto.</p>
+          </div>
+          <a class="btn btn-light" href="#inicio">Volver al inicio ↑</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand"><img class="brand-logo" src="Perfil FB.png" alt="Logo de la firma"> CONSULTORÍAS EN DERECHO MERCANTIL</div>
+        <p>Prototipo de portal informativo · Proyecto académico/corporativo</p>
+      </div>
+      <div class="footer-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#contratos">Contratos</a>
+        <a href="recursos-descargables.html">Recursos</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Aparición progresiva de los elementos al entrar en pantalla.
+    const revealItems = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
+
+      revealItems.forEach(item => revealObserver.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('is-visible'));
+    }
+
+    // Menú móvil.
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+      menuToggle.textContent = isOpen ? '×' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú');
+        menuToggle.textContent = '☰';
+      });
+    });
+
+    // Apertura y cierre del directorio lateral; no altera el menú superior.
+    const sideToggle = document.getElementById('sideToggle');
+    const sidePanel = document.getElementById('sidePanel');
+    const sideOverlay = document.getElementById('sideOverlay');
+    const sideClose = document.getElementById('sideClose');
+    let sideReturnFocus = null;
+    function setSideOpen(open) {
+      sidePanel.classList.toggle('open', open);
+      sideOverlay.hidden = !open;
+      document.body.classList.toggle('side-open', open);
+      sideToggle.setAttribute('aria-expanded', String(open));
+      if (open) { sideReturnFocus = document.activeElement; sideClose.focus(); }
+      else if (sideReturnFocus) { sideReturnFocus.focus(); }
+    }
+    sideToggle.addEventListener('click', () => setSideOpen(true));
+    sideClose.addEventListener('click', () => setSideOpen(false));
+    sideOverlay.addEventListener('click', () => setSideOpen(false));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidePanel.classList.contains('open')) setSideOpen(false);
+    });
+
+  </script>
+</body>
+</html>

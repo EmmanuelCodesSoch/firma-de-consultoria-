@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fichas técnicas y casos prácticos | Consultorías Mercantiles</title><meta name="description" content="Directorio de contratos mercantiles y modelos contractuales con enlaces a documentos externos."><style>
+    :root {
+      --coffee-950: #2b1d17;
+      --coffee-900: #38251c;
+      --coffee-800: #4b3024;
+      --coffee-700: #674532;
+      --coffee-600: #835b42;
+      --copper: #b47a4d;
+      --sand: #d9bd9a;
+      --cream: #f7f2eb;
+      --paper: #fffdf9;
+      --ink: #2e2824;
+      --muted: #74685f;
+      --line: #e7ddd2;
+      --white: #ffffff;
+      --shadow: 0 22px 55px rgba(43, 29, 23, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1160px, calc(100% - 44px)); margin: 0 auto; }
+
+    /* Navegación */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 253, 249, .94);
+      border-bottom: 1px solid rgba(103, 69, 50, .13);
+      backdrop-filter: blur(14px);
+    }
+    .nav-wrap {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 220px; }
+    .brand-mark {
+      width: 44px; height: 44px; border-radius: 13px;
+      display: grid; place-items: center;
+      color: var(--cream); background: var(--coffee-900);
+      font-family: Georgia, serif; font-size: 23px; font-weight: 700;
+      box-shadow: 0 8px 18px rgba(43, 29, 23, .16);
+    }
+    .brand-name { font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 700; line-height: 1.15; color: var(--coffee-950); }
+    .brand-sub { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { font-size: 12px; font-weight: 700; color: #514239; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--copper); }
+    .nav-links .nav-cta {
+      padding: 11px 16px; color: var(--white); background: var(--coffee-800);
+      border-radius: 999px;
+    }
+    .nav-links .nav-cta:hover { background: var(--coffee-600); color: var(--white); }
+    .menu-toggle {
+      display: none; border: 1px solid var(--line); background: var(--paper);
+      color: var(--coffee-900); border-radius: 10px; width: 44px; height: 42px;
+      font-size: 22px; cursor: pointer;
+    }
+
+    /* Portada */
+    .hero {
+      position: relative; overflow: hidden; color: var(--cream);
+      background:
+        radial-gradient(circle at 78% 20%, rgba(180, 122, 77, .25), transparent 29%),
+        linear-gradient(115deg, #2b1d17 0%, #4b3024 58%, #674532 100%);
+      min-height: 610px;
+      display: flex; align-items: center;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; opacity: .12; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to right, transparent, black);
+    }
+    .hero-grid {
+      position: relative; z-index: 1; display: grid;
+      grid-template-columns: 1.12fr .88fr; gap: 58px; align-items: center;
+      padding-top: 76px; padding-bottom: 82px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+      color: #e3c6a7; font-size: 11px; letter-spacing: 2.5px; font-weight: 800; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--copper); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 690px; margin-bottom: 23px;
+      font: 500 clamp(42px, 5.2vw, 68px)/1.08 Georgia, "Times New Roman", serif;
+      letter-spacing: -1.5px;
+    }
+    h1 em { color: #d8b38d; font-weight: 400; }
+    .hero-copy { max-width: 570px; color: #e4d8cd; font-size: 16px; line-height: 1.85; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+      min-height: 48px; padding: 0 20px; border-radius: 999px;
+      font-size: 12px; font-weight: 800; transition: transform .2s, background .2s, border-color .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-light { color: var(--coffee-950); background: #ead6c0; border: 1px solid #ead6c0; }
+    .btn-light:hover { background: #f4e6d7; }
+    .btn-outline { color: var(--cream); border: 1px solid rgba(255,255,255,.35); background: transparent; }
+    .btn-outline:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.7); }
+    .hero-visual { position: relative; min-height: 390px; }
+    .hero-photo {
+      position: absolute; top: 0; right: 0; width: 83%; height: 355px; object-fit: cover;
+      border-radius: 170px 170px 18px 18px; border: 7px solid rgba(255,255,255,.1);
+      filter: sepia(13%) saturate(.8); box-shadow: 0 30px 65px rgba(0,0,0,.28);
+    }
+    .hero-stamp {
+      position: absolute; right: 0; bottom: 0; width: 190px; padding: 23px 22px;
+      color: var(--coffee-950); background: #ead6c0; border-radius: 15px;
+      box-shadow: 0 20px 45px rgba(0,0,0,.2);
+    }
+    .hero-stamp strong { display: block; font: 700 28px/1.15 Georgia, serif; }
+    .hero-stamp span { display: block; margin-top: 8px; font-size: 11px; line-height: 1.5; color: #665043; }
+    .hero-caption {
+      position: absolute; left: 0; bottom: 30px; max-width: 205px; padding-left: 15px;
+      border-left: 2px solid var(--copper); color: #dfcfc0; font: italic 14px/1.6 Georgia, serif;
+    }
+
+    /* Banda de acceso */
+    .quick-strip { background: var(--cream); border-bottom: 1px solid var(--line); }
+    .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .quick-item {
+      display: flex; gap: 15px; align-items: center; padding: 26px 25px;
+      border-right: 1px solid var(--line);
+    }
+    .quick-item:first-child { padding-left: 0; }
+    .quick-item:last-child { border-right: 0; }
+    .quick-icon {
+      flex: 0 0 44px; width: 44px; height: 44px; display: grid; place-items: center;
+      color: var(--coffee-700); background: #eadbca; border-radius: 14px; font-size: 20px;
+    }
+    .quick-item strong { display: block; font: 700 16px Georgia, serif; color: var(--coffee-900); }
+    .quick-item span { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); }
+
+    /* Secciones generales */
+    section { padding: 100px 0; }
+    .section-heading { max-width: 690px; margin: 0 auto 48px; text-align: center; }
+    .section-kicker {
+      color: var(--copper); font-size: 10px; font-weight: 900; letter-spacing: 2.5px;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    h2 { margin-bottom: 17px; color: var(--coffee-950); font: 500 clamp(32px, 4vw, 46px)/1.16 Georgia, "Times New Roman", serif; letter-spacing: -.7px; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .section-heading h2 span { color: var(--coffee-600); font-style: italic; }
+
+    /* Roles */
+    .roles-section { background: var(--paper); }
+    .roles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .role-card {
+      overflow: hidden; background: var(--white); border: 1px solid var(--line); border-radius: 17px;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .role-card:hover { transform: translateY(-7px); box-shadow: var(--shadow); border-color: #d4b99f; }
+    .role-photo-wrap { position: relative; height: 215px; overflow: hidden; background: #e9ded2; }
+    .role-photo { width: 100%; height: 100%; object-fit: cover; filter: sepia(15%) saturate(.75); transition: transform .5s ease; }
+    .role-card:hover .role-photo { transform: scale(1.05); }
+    .role-number {
+      position: absolute; top: 13px; left: 13px; display: grid; place-items: center;
+      width: 34px; height: 34px; border-radius: 50%; color: var(--cream);
+      background: rgba(43,29,23,.86); font: 14px Georgia, serif;
+    }
+    .role-info { padding: 20px 18px 22px; }
+    .role-info h3 { margin-bottom: 7px; color: var(--coffee-950); font: 700 18px/1.3 Georgia, serif; }
+    .role-title {
+      display: inline-block; padding: 6px 9px; border-radius: 5px; background: #f4ece3;
+      color: var(--coffee-700); font-size: 9px; letter-spacing: 1px; font-weight: 900; text-transform: uppercase;
+    }
+    .roles-note {
+      display: flex; align-items: flex-start; gap: 13px; margin-top: 28px; padding: 18px 20px;
+      background: var(--cream); border-left: 3px solid var(--copper); color: var(--muted); font-size: 12px;
+    }
+    .roles-note strong { color: var(--coffee-900); }
+
+    /* Contenido destacado */
+    .content-section { background: var(--cream); }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+    .feature-card {
+      position: relative; min-height: 330px; overflow: hidden; padding: 35px;
+      display: flex; flex-direction: column; justify-content: flex-end; color: var(--cream);
+      border-radius: var(--radius); isolation: isolate; background: var(--coffee-900);
+    }
+    .feature-card::before {
+      content: ""; position: absolute; inset: 0; z-index: -2;
+      background-size: cover; background-position: center; transition: transform .6s ease;
+      filter: sepia(22%) saturate(.7);
+    }
+    .feature-card:hover::before { transform: scale(1.05); }
+    .feature-card::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(0deg, rgba(35,23,17,.94), rgba(35,23,17,.12) 90%);
+    }
+    .feature-card.typical::before { background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=85'); }
+    .feature-card.atypical::before { background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85'); }
+    .feature-tag { align-self: flex-start; margin-bottom: auto; padding: 7px 11px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; font-size: 10px; letter-spacing: 1.3px; text-transform: uppercase; }
+    .feature-card h3 { max-width: 390px; margin: 32px 0 12px; font: 500 31px/1.2 Georgia, serif; }
+    .feature-card p { max-width: 440px; margin-bottom: 20px; color: #e4d8cd; font-size: 13px; line-height: 1.75; }
+    .text-link { display: inline-flex; align-items: center; gap: 10px; width: fit-content; color: #e7c7a6; font-size: 12px; font-weight: 800; }
+    .text-link span { transition: transform .2s; }
+    .text-link:hover span { transform: translateX(5px); }
+
+    /* Métodos y fichas */
+    .resources-section { background: var(--paper); }
+    .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .resource-card {
+      padding: 28px; background: var(--white); border: 1px solid var(--line); border-radius: 16px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .resource-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .resource-icon {
+      width: 48px; height: 48px; display: grid; place-items: center; margin-bottom: 23px;
+      border-radius: 14px; background: #f0e3d5; color: var(--coffee-700); font-size: 22px;
+    }
+    .resource-card h3 { margin-bottom: 10px; color: var(--coffee-950); font: 700 20px Georgia, serif; }
+    .resource-card p { min-height: 68px; margin-bottom: 18px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .resource-card a { color: var(--coffee-700); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+    .resource-card a:hover { color: var(--copper); }
+
+    /* Cierre */
+    .cta-section { padding: 0 0 95px; background: var(--paper); }
+    .cta-panel {
+      position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; gap: 35px;
+      padding: 48px 55px; color: var(--cream); background: var(--coffee-900); border-radius: var(--radius);
+    }
+    .cta-panel::after {
+      content: "§"; position: absolute; right: 32%; top: -70px; color: rgba(255,255,255,.045);
+      font: 300 250px Georgia, serif; pointer-events: none;
+    }
+    .cta-panel h2 { max-width: 580px; margin-bottom: 12px; color: var(--cream); font-size: clamp(29px, 3.4vw, 40px); }
+    .cta-panel p { max-width: 590px; margin-bottom: 0; color: #d8c9bc; font-size: 13px; }
+    .cta-panel .btn { position: relative; z-index: 1; flex-shrink: 0; }
+
+    footer { padding: 27px 0; background: #241812; color: #c9b9ab; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-brand { color: var(--cream); font: 700 15px Georgia, serif; }
+    footer p { margin: 5px 0 0; font-size: 10px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .footer-links a { font-size: 10px; }
+    .footer-links a:hover { color: #e7c7a6; }
+
+    /* Efecto de aparición al desplazarse */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* Adaptación a tabletas y móviles */
+    @media (max-width: 1000px) {
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 11px; }
+      .hero-grid { gap: 30px; }
+      .roles-grid { grid-template-columns: repeat(2, 1fr); }
+      .role-photo-wrap { height: 250px; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 32px, 560px); }
+      .nav-wrap { min-height: 70px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 18px 22px 22px;
+        background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: 0 18px 24px rgba(43,29,23,.08);
+        align-items: stretch; flex-direction: column; gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 4px; font-size: 13px; }
+      .nav-links .nav-cta { text-align: center; margin-top: 8px; }
+      .hero { min-height: 0; }
+      .hero-grid { grid-template-columns: 1fr; gap: 28px; padding-top: 65px; padding-bottom: 55px; }
+      h1 { font-size: clamp(40px, 12vw, 58px); }
+      .hero-copy { font-size: 14px; }
+      .hero-visual { min-height: 335px; max-width: 500px; width: 100%; margin: 0 auto; }
+      .hero-photo { height: 300px; width: 80%; }
+      .hero-caption { bottom: 14px; }
+      .hero-stamp { width: 160px; padding: 17px; }
+      .hero-stamp strong { font-size: 24px; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .quick-item, .quick-item:first-child { padding: 17px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .quick-item:last-child { border-bottom: 0; }
+      section { padding: 72px 0; }
+      .section-heading { margin-bottom: 34px; }
+      .roles-grid { gap: 13px; }
+      .role-photo-wrap { height: 190px; }
+      .role-info { padding: 16px 13px 18px; }
+      .role-info h3 { font-size: 16px; }
+      .role-title { font-size: 8px; letter-spacing: .6px; }
+      .feature-grid, .resources-grid { grid-template-columns: 1fr; }
+      .feature-card { min-height: 310px; padding: 27px; }
+      .resource-card p { min-height: 0; }
+      .cta-panel { padding: 34px 25px; align-items: flex-start; flex-direction: column; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 400px) {
+      .brand { min-width: 0; }
+      .brand-name { font-size: 15px; }
+      .brand-sub { font-size: 8px; letter-spacing: 1.3px; }
+      .roles-grid { grid-template-columns: 1fr; }
+      .role-photo-wrap { height: 250px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+    }
+  
+    .brand-logo { width: 48px; height: 48px; object-fit: cover; border-radius: 50%; border: 2px solid #c79a4b; box-shadow: 0 4px 14px #0002; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .hero-banner-wrap { position:relative; width:100%; margin: 0 auto; padding: 0; background:#08182a; overflow:hidden; }
+    .hero-banner { display:block; width:100%; height:auto; max-height:560px; object-fit:cover; }
+    .hero-banner-link { display:block; line-height:0; }
+    .theory-section { padding: 100px 0; background: linear-gradient(180deg,#fffdf9,#f7f1e8); }
+    .theory-intro-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin: 38px 0 58px; }
+    .theory-intro { padding:28px; border:1px solid #e5d5bf; border-radius:18px; background:#fff; box-shadow:0 12px 35px #38251c0c; }
+    .theory-intro > span,.theory-subheading > span { color:#b47a4d; font-size:.78rem; letter-spacing:.14em; font-weight:800; }
+    .theory-intro h3 { margin:12px 0; font-family:Georgia,serif; font-size:1.45rem; color:#38251c; }
+    .theory-intro p { color:#74685f; line-height:1.7; }
+    .theory-intro a { color:#835b42; font-weight:700; text-decoration:none; }
+    .theory-subheading { display:flex; align-items:center; gap:18px; margin:54px 0 24px; border-bottom:1px solid #d9bd9a; padding-bottom:16px; }
+    .theory-subheading h3 { margin:0; font:600 clamp(1.5rem,3vw,2.2rem) Georgia,serif; color:#38251c; }
+    .theory-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:stretch; }
+    .theory-card { padding:26px 28px; background:#fff; border:1px solid #e8ded1; border-radius:16px; box-shadow:0 12px 32px #38251c0a; min-width:0; }
+    .theory-tag { display:inline-block; margin-bottom:10px; color:#8b613c; background:#f6ecdc; border-radius:30px; padding:6px 11px; font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+    .theory-card h3 { margin:0 0 16px; color:#38251c; font:600 1.35rem/1.3 Georgia,serif; }
+    .theory-copy { color:#514840; font-size:.96rem; line-height:1.72; text-align:justify; overflow-wrap:anywhere; }
+    .theory-copy p { margin:0 0 12px; }
+    .theory-copy ul { padding-left:22px; margin:6px 0 15px; }
+    .theory-copy li { padding:2px 0 2px 3px; }
+    .theory-card:nth-child(3n) { background:#fffcf7; }
+    @media(max-width:850px){ .theory-intro-grid{grid-template-columns:1fr;} .theory-grid{grid-template-columns:1fr;} .hero-banner{max-height:none;} }
+
+
+    /* Directorio lateral: independiente del menú superior y de las secciones de inicio. */
+    .side-toggle{position:fixed;left:0;top:43%;z-index:1050;border:1px solid #c6a87d;border-left:0;border-radius:0 12px 12px 0;background:#39261e;color:#f8eddd;box-shadow:4px 9px 24px #24150f35;padding:18px 11px;display:flex;align-items:center;gap:8px;writing-mode:vertical-rl;letter-spacing:.16em;font-size:10px;font-weight:800;cursor:pointer;transition:background .25s,transform .25s}
+    .side-toggle:hover{background:#6b4530;transform:translateX(3px)}
+    .side-toggle-icon{font-size:17px;line-height:1;writing-mode:horizontal-tb}
+    .side-panel{position:fixed;top:0;bottom:0;left:0;width:min(370px,88vw);z-index:1101;background:#2b1d17;color:#f4e8d7;box-shadow:20px 0 60px #130c0860;transform:translateX(-105%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),visibility .35s;display:flex;flex-direction:column;overflow-y:auto}
+    .side-panel.open{transform:translateX(0);visibility:visible}
+    .side-overlay{position:fixed;inset:0;z-index:1100;background:#140b08a6;backdrop-filter:blur(3px)}
+    .side-overlay[hidden]{display:none}
+    .side-header{display:flex;align-items:center;gap:13px;padding:34px 27px 26px;border-bottom:1px solid #ffffff20}
+    .side-monogram{height:56px;width:56px;flex:none;border:1px solid #b58a59;border-radius:12px;display:block;object-fit:contain;background:#fff8ee;padding:3px}
+    .side-header>div:nth-child(2){display:flex;flex-direction:column;gap:5px;min-width:0}
+    .side-kicker{color:#c4a07b;letter-spacing:.18em;font-size:9px;font-weight:800}
+    .side-header strong{font:18px Georgia,serif;color:#fff9ef}
+    .side-close{margin-left:auto;align-self:flex-start;border:0;background:transparent;color:#d9c6b5;font-size:28px;cursor:pointer;line-height:1}
+    .side-rule{display:flex;align-items:center;gap:12px;margin:28px 27px 12px;color:#b99b7b;font-size:9px;letter-spacing:.22em;font-weight:800}
+    .side-rule span{height:1px;flex:1;background:#ffffff24}
+    .side-links{padding:0 15px;display:flex;flex-direction:column;gap:5px}
+    .side-links a{display:flex;align-items:center;gap:13px;padding:16px 13px;border-radius:10px;color:#e7d7c8;text-decoration:none;border:1px solid transparent;transition:background .2s,border-color .2s,transform .2s}
+    .side-links a:hover,.side-links a:focus-visible{background:#ffffff0d;border-color:#c49a6240;transform:translateX(3px)}
+    .side-links a.active{background:#b58a5922;border-color:#b58a5960;color:#fff}
+    .side-number{font:italic 14px Georgia,serif;color:#caa575;flex:none}
+    .side-label{font-size:13px;font-weight:600;line-height:1.45;flex:1}
+    .side-arrow{font-size:15px;color:#c49a62;flex:none}
+    .side-bottom{margin-top:auto;padding:28px 27px 33px;color:#bda58e;font-size:9px;letter-spacing:.12em;line-height:1.9}
+    .side-bottom-line{display:block;width:38px;height:2px;background:#bc9568;margin-bottom:17px}
+    body.side-open{overflow:hidden}
+    @media(max-width:760px){.side-toggle{top:auto;bottom:23px;left:16px;border:1px solid #c6a87d;border-radius:50px;writing-mode:horizontal-tb;padding:14px 18px;box-shadow:0 9px 26px #24150f45;font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.side-panel,.side-toggle,.side-links a{transition:none}}
+
+  
+
+  .directory-hero{background:radial-gradient(circle at 85% 0%,#845c403f,transparent 45%),linear-gradient(115deg,#2b1d17,#563929);color:#fff6eb;padding:88px 0 80px;position:relative;overflow:hidden}
+  .directory-hero:after{content:'§';position:absolute;right:5%;top:-70px;font:340px Georgia,serif;color:#ffffff08;pointer-events:none}
+  .directory-hero .container{position:relative;z-index:1}
+  .directory-eyebrow{font-size:11px;letter-spacing:.23em;color:#e0bb8c;font-weight:800;text-transform:uppercase;margin-bottom:20px}
+  .directory-hero h1{max-width:880px;font-size:clamp(38px,5.3vw,70px);margin-bottom:20px}
+  .directory-hero h1 em{color:#d8b38d}
+  .directory-lead{max-width:680px;color:#eadfd3;line-height:1.85;font-size:16px}
+  .directory-breadcrumb{display:flex;gap:10px;align-items:center;color:#e1c9ad;font-size:12px;margin-bottom:25px}
+  .directory-breadcrumb a{text-decoration:underline;text-underline-offset:4px}
+  .directory-summary{display:flex;gap:28px;flex-wrap:wrap;margin-top:35px;border-top:1px solid #ffffff35;padding-top:22px}
+  .directory-summary span{font-size:12px;color:#e2d0be}.directory-summary strong{font:26px Georgia,serif;color:#e4bf91;margin-right:8px}
+  .directory-main{background:#faf7f2;padding:65px 0 100px;min-height:65vh}
+  .directory-intro{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px}
+  .directory-intro h2{font:38px Georgia,serif;color:#34221a;margin:0 0 9px}.directory-intro p{margin:0;color:#73645a;max-width:650px}
+  .directory-tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:28px}
+  .directory-search{background:#fff;border:1px solid #e4d6c6;border-radius:13px;padding:14px 17px;font:inherit;color:#33251d;min-width:min(100%,330px);flex:1;outline-offset:2px}
+  .directory-filter{border:1px solid #d7c2a9;border-radius:50px;background:#fff;color:#634630;font-weight:700;font-size:12px;padding:12px 18px;cursor:pointer;transition:.2s}
+  .directory-filter:hover,.directory-filter.active{background:#3b281e;color:#fff;border-color:#3b281e}
+  .directory-group{margin-top:34px}.directory-group-head{display:flex;align-items:center;gap:14px;margin-bottom:23px;border-bottom:1px solid #e3d4c4;padding-bottom:14px}
+  .directory-group-head h2{font:30px Georgia,serif;margin:0;color:#352319}.directory-group-head span{font-size:11px;color:#9a7b5a;letter-spacing:.14em;font-weight:800}
+  .directory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .doc-card{display:flex;flex-direction:column;background:#fffdf9;border:1px solid #e6d9c9;border-radius:17px;padding:24px;min-height:214px;box-shadow:0 10px 25px #2b1d170b;transition:transform .25s,box-shadow .25s,border-color .25s}
+  .doc-card:hover{transform:translateY(-5px);box-shadow:0 18px 36px #2b1d1719;border-color:#c8a678}
+  .doc-card-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:23px}.doc-index{font:italic 18px Georgia,serif;color:#b58a59}.doc-source{font-size:10px;color:#8c7968;border:1px solid #e9ddcf;border-radius:40px;padding:4px 9px;white-space:nowrap}
+  .doc-card h3{font:22px/1.3 Georgia,serif;color:#39261d;margin:0 0 25px;overflow-wrap:anywhere}.doc-card-bottom{margin-top:auto;border-top:1px solid #eee4d9;padding-top:16px}
+  .doc-action{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#76502e;font-weight:800;font-size:12px}.doc-action:hover{color:#b57b42}.doc-action span{font-size:19px}
+  .doc-unavailable{color:#957f6c;font-size:12px;font-weight:600}.directory-empty{padding:40px 20px;text-align:center;color:#806d5e;background:#fff;border:1px dashed #cbb69f;border-radius:16px}
+  .directory-note{margin-top:38px;padding:19px 23px;border-left:3px solid #b58a59;background:#f1e9df;color:#6d5848;font-size:13px;line-height:1.8;border-radius:0 10px 10px 0}
+  .doc-card[hidden],.directory-group[hidden]{display:none!important}
+  @media(max-width:900px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:620px){.directory-grid{grid-template-columns:1fr}.directory-hero{padding:65px 0 58px}.directory-main{padding:45px 0 75px}.directory-group-head h2{font-size:25px}.directory-tools{align-items:stretch}.directory-search{flex-basis:100%}}
+</style></head><body>
+<header class="topbar">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html#inicio" aria-label="Ir al inicio">
+        <img class="brand-logo" src="Perfil FB.png" alt="Logo de Consultorías en Derecho Mercantil y Corporativas">
+        <span class="brand-name">CONSULTORÍAS MERCANTILES<span class="brand-sub">Derecho Mercantil y Corporativas</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+        <a href="index.html#inicio">Inicio</a>
+        <a href="index.html#equipo">Quiénes somos</a>
+        <a href="index.html#teoria">Teoría</a>
+        <a href="index.html#contratos">Contratos</a>
+        <a href="index.html#teoria">Teoría mercantil</a>
+        <a class="nav-cta" href="index.html#contacto">Explorar el portal ↗</a>
+      </nav>
+    </div>
+  </header>
+  <button class="side-toggle" id="sideToggle" type="button" aria-label="Abrir menú de secciones" aria-controls="sidePanel" aria-expanded="false">
+    <span class="side-toggle-icon">☰</span><span>SECCIONES</span>
+  </button>
+  <div class="side-overlay" id="sideOverlay" hidden></div>
+  <aside class="side-panel" id="sidePanel" aria-label="Páginas del portal">
+    <div class="side-header">
+      <img class="side-monogram" src="Perfil FB.png" alt="Logo original de la firma">
+      <div><span class="side-kicker">PORTAL JURÍDICO</span><strong>Directorio de secciones</strong></div>
+      <button type="button" class="side-close" id="sideClose" aria-label="Cerrar menú lateral">×</button>
+    </div>
+    <div class="side-rule"><span></span> NAVEGACIÓN <span></span></div>
+    <nav class="side-links" aria-label="Secciones del sitio">
+      <a href="index.html"><span class="side-number">01</span><span class="side-label">Página de inicio</span><span class="side-arrow">↗</span></a>
+      <a class="active" href="fichas-tecnicas-casos-practicos.html" aria-current="page"><span class="side-number">02</span><span class="side-label">Fichas técnicas y casos prácticos</span><span class="side-arrow">↗</span></a>
+      <a href="recursos-descargables.html"><span class="side-number">03</span><span class="side-label">Sección de recursos descargables</span><span class="side-arrow">↗</span></a>
+      <a href="testimonios-preguntas-frecuentes.html"><span class="side-number">04</span><span class="side-label">Testimonios y preguntas frecuentes</span><span class="side-arrow">↗</span></a>
+      <a href="actualizaciones-noticias.html"><span class="side-number">05</span><span class="side-label">Actualizaciones y noticias</span><span class="side-arrow">↗</span></a>
+      <a href="vlog-multimedia.html"><span class="side-number">06</span><span class="side-label">Vlog y multimedia</span><span class="side-arrow">↗</span></a>
+      <a href="contacto.html"><span class="side-number">07</span><span class="side-label">Contacto y redes sociales</span><span class="side-arrow">↗</span></a>
+    </nav>
+    <div class="side-bottom"><span class="side-bottom-line"></span>CONSULTORÍAS EN DERECHO MERCANTIL<br>Y CORPORATIVAS</div>
+  </aside>
+
+  
+<main>
+<section class="directory-hero"><div class="container"><div class="directory-breadcrumb"><a href="index.html">Inicio</a><span>›</span><span>Fichas técnicas y casos prácticos</span></div><div class="directory-eyebrow">Biblioteca jurídica · Directorio documental</div><h1>Fichas técnicas y <em>casos prácticos.</em></h1><p class="directory-lead">Explora un catálogo organizado de contratos mercantiles y modelos contractuales. Selecciona cualquier documento disponible para consultarlo en su plataforma de origen.</p><div class="directory-summary"><span><strong>26</strong> Referencias</span><span><strong>22</strong> Enlaces disponibles</span><span><strong>02</strong> Colecciones</span></div></div></section>
+<section class="directory-main"><div class="container"><div class="directory-intro"><div><div class="directory-eyebrow" style="color:#a17850">Catálogo de consulta</div><h2>Directorio de documentos</h2><p>Encuentra cada referencia por nombre o filtra las colecciones. Los enlaces se abren en una pestaña nueva.</p></div></div>
+<div class="directory-tools"><input class="directory-search" id="docSearch" type="search" placeholder="Buscar contrato o modelo..." aria-label="Buscar documentos"><button class="directory-filter active" data-filter="all" type="button" aria-pressed="true">Todos</button><button class="directory-filter" data-filter="tipicos" type="button" aria-pressed="false">Contratos típicos</button><button class="directory-filter" data-filter="modelos" type="button" aria-pressed="false">Modelos contractuales</button></div>
+<section class="directory-group" data-section="tipicos"><div class="directory-group-head"><span>01</span><h2>Contratos típicos</h2></div><div class="directory-grid"><article class="doc-card reveal" data-group="tipicos" data-title="compraventa mercantil">
+      <div class="doc-card-top"><span class="doc-index">01</span><span class="doc-source">Google Drive</span></div>
+      <h3>Compraventa Mercantil</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1N8kJ_Y9HaVKOwCkSNkKzbvaXzEEO3cVY/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Compraventa Mercantil en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato estimatorio">
+      <div class="doc-card-top"><span class="doc-index">02</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato estimatorio</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1b4AlWkizG5GSY8l03HBDoEM1sUpmuBeI/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato estimatorio en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de suministro">
+      <div class="doc-card-top"><span class="doc-index">03</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato de suministro</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1B4w804N1zqnmJiPitFnhCaXVQdmAOXRk/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de suministro en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de licencia de uso">
+      <div class="doc-card-top"><span class="doc-index">04</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato de licencia de uso</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1nh9efcuZdQpfKXDYmUeK-rZSmaYcjjqM/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de licencia de uso en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de deposito mercantil">
+      <div class="doc-card-top"><span class="doc-index">05</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato de deposito mercantil</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/11F3defrFup_QczQanGeGYdPHctVellh9/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de deposito mercantil en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="apertura de credito">
+      <div class="doc-card-top"><span class="doc-index">06</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Apertura de credito</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:9a0448d6-127c-4199-a222-424cbb02a5d8" target="_blank" rel="noopener noreferrer" aria-label="Abrir Apertura de credito en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de factura y descuento">
+      <div class="doc-card-top"><span class="doc-index">07</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Contrato de factura y descuento</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:6c2c7b54-47e3-4119-a4b3-cfd0fb181c7d" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de factura y descuento en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="cuenta corriente">
+      <div class="doc-card-top"><span class="doc-index">08</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Cuenta corriente</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:23168c66-dffd-4e34-a0a0-bd602934015d" target="_blank" rel="noopener noreferrer" aria-label="Abrir Cuenta corriente en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de reporto">
+      <div class="doc-card-top"><span class="doc-index">09</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Contrato de reporto</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:fd7cd06f-b74c-4e41-9cd5-b0384624a1c0" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de reporto en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de fideicomiso">
+      <div class="doc-card-top"><span class="doc-index">10</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato de fideicomiso</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1BNToJDhtG356nIVsovxUmZrAeYj6GD0N/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de fideicomiso en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de transporte">
+      <div class="doc-card-top"><span class="doc-index">11</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato de transporte</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1pPkerZlnc7KXerQlE5QgCddqzrNwUf9C/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de transporte en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="tipicos" data-title="contrato de credito documentario">
+      <div class="doc-card-top"><span class="doc-index">12</span><span class="doc-source">Google Drive</span></div>
+      <h3>Contrato de credito documentario</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1IQujhUJDdiMMnbGW7HbiR0zu7igFmA0f/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de credito documentario en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article></div></section>
+<section class="directory-group" data-section="modelos"><div class="directory-group-head"><span>02</span><h2>Modelos contractuales</h2></div><div class="directory-grid"><article class="doc-card reveal" data-group="modelos" data-title="modelo del contrato de bolsa">
+      <div class="doc-card-top"><span class="doc-index">13</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Modelo del contrato de bolsa</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:4d56f4d1-e5eb-4d96-8257-3afa8f1bd2c4" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo del contrato de bolsa en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo de contrato de fondos de inversion">
+      <div class="doc-card-top"><span class="doc-index">14</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Modelo de contrato de fondos de inversion</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:87578edd-2e6b-44ff-a1f7-f7460d716fc1" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo de contrato de fondos de inversion en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo de contratos de futuros">
+      <div class="doc-card-top"><span class="doc-index">15</span><span class="doc-source">Scribd</span></div>
+      <h3>Modelo de contratos de futuros</h3><div class="doc-card-bottom"><a class="doc-action" href="https://es.scribd.com/document/693596558/Contrato-de-Deposito-v3" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo de contratos de futuros en Scribd">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo de contrato colectivo de valores">
+      <div class="doc-card-top"><span class="doc-index">16</span><span class="doc-source">Scribd</span></div>
+      <h3>Modelo de contrato colectivo de valores</h3><div class="doc-card-bottom"><a class="doc-action" href="https://es.scribd.com/document/693596558/Contrato-de-Deposito-v3" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo de contrato colectivo de valores en Scribd">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo contrato de leasing">
+      <div class="doc-card-top"><span class="doc-index">17</span><span class="doc-source">Sin enlace disponible</span></div>
+      <h3>Modelo contrato de leasing</h3><div class="doc-card-bottom"><span class="doc-unavailable">Enlace pendiente de agregar</span></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo conntrato de franquicia">
+      <div class="doc-card-top"><span class="doc-index">18</span><span class="doc-source">Sin enlace disponible</span></div>
+      <h3>Modelo contrato de franquicia</h3><div class="doc-card-bottom"><span class="doc-unavailable">Enlace pendiente de agregar</span></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo contrato de distribución">
+      <div class="doc-card-top"><span class="doc-index">19</span><span class="doc-source">Sin enlace disponible</span></div>
+      <h3>Modelo contrato de distribución</h3><div class="doc-card-bottom"><span class="doc-unavailable">Enlace pendiente de agregar</span></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo contrato de club de campo">
+      <div class="doc-card-top"><span class="doc-index">20</span><span class="doc-source">Sin enlace disponible</span></div>
+      <h3>Modelo contrato de club de campo</h3><div class="doc-card-bottom"><span class="doc-unavailable">Enlace pendiente de agregar</span></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="contrato de renting">
+      <div class="doc-card-top"><span class="doc-index">21</span><span class="doc-source">Adobe Acrobat</span></div>
+      <h3>Contrato de renting</h3><div class="doc-card-bottom"><a class="doc-action" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:793ccec3-8af6-4fc7-a4ac-5cf425c8df72" target="_blank" rel="noopener noreferrer" aria-label="Abrir Contrato de renting en Adobe Acrobat">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo de contrato de transferencia de tecnología">
+      <div class="doc-card-top"><span class="doc-index">22</span><span class="doc-source">Google Drive</span></div>
+      <h3>Modelo de contrato DE transferencia de tecnología</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1qOmBckpSnqBLo_MCwUt0PqGlCdfz2GgG/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo de contrato DE transferencia de tecnología en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo del contrato de tiempo compartido.">
+      <div class="doc-card-top"><span class="doc-index">23</span><span class="doc-source">Google Drive</span></div>
+      <h3>Modelo del Contrato de tiempo compartido</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1K0IxGCDkrHzxT8OD1vmhHpySAAmjlXHR/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo del Contrato de tiempo compartido en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo del contrato de pool aeronáutico.">
+      <div class="doc-card-top"><span class="doc-index">24</span><span class="doc-source">Google Drive</span></div>
+      <h3>Modelo del Contrato de pool aeronáutico</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1wEjuc6lLiFnTnWtJaaPRIms3Av_kg-lO/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo del Contrato de pool aeronáutico en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo del contrato de asistencia administrativa.">
+      <div class="doc-card-top"><span class="doc-index">25</span><span class="doc-source">Google Drive</span></div>
+      <h3>Modelo del Contrato de asistencia administrativa</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/1CLStNlfyMiAaNNgsPIiRAUhr5-oDQbJW/view?usp=drive_link" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo del Contrato de asistencia administrativa en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article><article class="doc-card reveal" data-group="modelos" data-title="modelo del contrato.">
+      <div class="doc-card-top"><span class="doc-index">26</span><span class="doc-source">Google Drive</span></div>
+      <h3>Modelo del contrato</h3><div class="doc-card-bottom"><a class="doc-action" href="https://drive.google.com/file/d/12AI3-YoKfQYnoAD2z9nOhe94Bl9OGABv/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Abrir Modelo del contrato en Google Drive">Consultar documento <span aria-hidden="true">↗</span></a></div>
+    </article></div></section>
+<p class="directory-empty" id="directoryEmpty" hidden>No encontramos documentos con ese nombre. Prueba otra búsqueda.</p>
+</div></section></main>
+<footer><div class="container footer-inner"><div><div class="footer-brand"><img class="brand-logo" src="Perfil FB.png" alt="Logo de la firma"> CONSULTORÍAS EN DERECHO MERCANTIL</div><p>Portal de consulta y documentación mercantil.</p></div><div class="footer-links"><a href="index.html">Inicio</a><a href="index.html#equipo">Equipo</a><a href="index.html#contratos">Contratos</a><a href="recursos-descargables.html">Recursos</a></div></div></footer>
+<script>
+    // Aparición progresiva de los elementos al entrar en pantalla.
+    const revealItems = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
+
+      revealItems.forEach(item => revealObserver.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('is-visible'));
+    }
+
+    // Menú móvil.
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+      menuToggle.textContent = isOpen ? '×' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú');
+        menuToggle.textContent = '☰';
+      });
+    });
+
+    // Apertura y cierre del directorio lateral; no altera el menú superior.
+    const sideToggle = document.getElementById('sideToggle');
+    const sidePanel = document.getElementById('sidePanel');
+    const sideOverlay = document.getElementById('sideOverlay');
+    const sideClose = document.getElementById('sideClose');
+    let sideReturnFocus = null;
+    function setSideOpen(open) {
+      sidePanel.classList.toggle('open', open);
+      sideOverlay.hidden = !open;
+      document.body.classList.toggle('side-open', open);
+      sideToggle.setAttribute('aria-expanded', String(open));
+      if (open) { sideReturnFocus = document.activeElement; sideClose.focus(); }
+      else if (sideReturnFocus) { sideReturnFocus.focus(); }
+    }
+    sideToggle.addEventListener('click', () => setSideOpen(true));
+    sideClose.addEventListener('click', () => setSideOpen(false));
+    sideOverlay.addEventListener('click', () => setSideOpen(false));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidePanel.classList.contains('open')) setSideOpen(false);
+    });
+
+  
+const searchInput=document.getElementById('docSearch');
+const filters=[...document.querySelectorAll('.directory-filter')];
+const docs=[...document.querySelectorAll('.doc-card')];
+let activeFilter='all';
+function updateDirectory(){const q=searchInput.value.trim().toLocaleLowerCase('es');let count=0;docs.forEach(card=>{const visible=(activeFilter==='all'||card.dataset.group===activeFilter)&&card.dataset.title.includes(q);card.hidden=!visible;if(visible)count++;});document.querySelectorAll('.directory-group').forEach(group=>{group.hidden=![...group.querySelectorAll('.doc-card')].some(card=>!card.hidden);});document.getElementById('directoryEmpty').hidden=count!==0;}
+searchInput.addEventListener('input',updateDirectory);
+filters.forEach(btn=>btn.addEventListener('click',()=>{activeFilter=btn.dataset.filter;filters.forEach(b=>{const selected=b===btn;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});updateDirectory();}));
+</script></body></html>
